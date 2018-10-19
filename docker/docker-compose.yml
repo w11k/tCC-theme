@@ -1,0 +1,25 @@
+version: '3.2'
+
+services:
+
+  wordpress:
+    links:
+      - mysql
+    image: wordpress
+    restart: always
+    # Runs at `localhost:8080`
+    ports:
+      - "127.0.0.1:8080:80"
+    environment:
+      WORDPRESS_DB_PASSWORD: w11k
+    working_dir: /var/www/html
+    # Directory mapping for enjoyable development.
+    # Adjust if necessary: - YOUR_DIR:CONTAINER_DIR
+    volumes:
+      - ./wordpress/wp-content/:/var/www/html/wp-content
+
+  mysql:
+    image: mysql:5.7
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=w11k
